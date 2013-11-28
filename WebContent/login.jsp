@@ -3,8 +3,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="US-ASCII">
-<title>Sistema de Votaci&oacute;n - Modulo Usuarios</title>
+	<meta charset="US-ASCII">
+	<title>Sistema de Votaci&oacute;n - Modulo Usuarios</title>
+	
+	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="js/jquery.simpleCaptcha.js"></script>
 </head>
 <body>
 	<article>
