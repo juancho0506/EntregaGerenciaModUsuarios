@@ -14,12 +14,17 @@
 				<h2>Ingrese sus datos: </h2>
 				<form action="LoginServlet" method="post">		
 					<div id="divFormaUsuarios" style="width: 80%">
-						<label for="username" >Username: <input id="username" type="text" placeholder="Ingrese su usuario"></label>
-						<label for="password" >Password: <input id="password" type="password" placeholder="Ingrese su contrase&nacute;a"></label>	
-						<input type="submit" id="enviarLogin" name="enviarLogin" value="Login">
+						<label for="username" >Username: <input id="username" name="username" type="text" placeholder="Ingrese su usuario"></label>
+						<label for="password" >Password: <input id="password" name="password" type="password" placeholder="Ingrese su contrase&nacute;a"></label>	
+						<br /><input type="submit" id="enviarLogin" name="enviarLogin" value="Login">
 					</div>
 				</form>
 			</fieldset>
+			<%if(request.getParameter("error")!=null){ %>
+				<div style="background-color: red; color: white">
+					<label>Usuario no existe o datos incorrectos, vuelva a intentarlo.</label>
+				</div>
+			<% }%>
 		</section>	
 	</article>
 </body>

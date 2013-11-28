@@ -1,4 +1,4 @@
-package wsmodel;
+package ws.model;
 
 
 public class Usuario {
