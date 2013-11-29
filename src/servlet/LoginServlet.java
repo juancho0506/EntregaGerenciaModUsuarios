@@ -52,7 +52,7 @@ public class LoginServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("Entra al servlet de login por get!!");
+		response.sendRedirect("login.jsp");
 	}
 
 	/**
@@ -69,11 +69,19 @@ public class LoginServlet extends HttpServlet {
 		Usuario user = null;
 		
 		try {
-			user = usuarioService.autenticar(username, password);
-			if(user!=null){
-				response.sendRedirect("success.jsp");
-			}else{
-				response.sendRedirect("login.jsp?error=loginFailed");
+			if (rpHash(request.getParameter("defaultReal")).equals(
+					request.getParameter("defaultRealHash"))) {
+				// Accepted Captcha
+				user = usuarioService.autenticar(username, password);
+				if(user!=null){
+					response.sendRedirect("success.jsp");
+				}else{
+					response.sendRedirect("login.jsp?error=loginFailed");
+				}
+			}
+			else {
+				// Rejected Captcha
+				response.sendRedirect("login.jsp?error=invalidCaptcha");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -81,6 +89,23 @@ public class LoginServlet extends HttpServlet {
 		}
 		
 		
+	}
+	
+	
+	
+	/**
+	 * Compute the hash value to check for "real person" submission.
+	 * 
+	 * @param  value  the entered value
+	 * @return  its hash value
+	 */
+	private String rpHash(String value) {
+		int hash = 5381;
+		value = value.toUpperCase();
+		for(int i = 0; i < value.length(); i++) {
+			hash = ((hash << 5) + hash) + value.charAt(i);
+		}
+		return String.valueOf(hash);
 	}
 
 }

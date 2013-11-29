@@ -6,8 +6,20 @@
 	<meta charset="US-ASCII">
 	<title>Sistema de Votaci&oacute;n - Modulo Usuarios</title>
 	
+	<!-- CSS -->
+	<link rel="stylesheet" type="text/css" href="css/jquery.realperson.css"> 
+	<style type="text/css">
+		.realperson-challenge { display: inline-block }
+	</style>
+	
+	<!-- js libraries -->
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
-	<script src="js/jquery.simpleCaptcha.js"></script>
+	<script type="text/javascript" src="js/jquery.realperson.js"></script>
+	<script type="text/javascript">
+		$(function() {
+			$('#defaultReal').realperson();
+		});
+	</script>
 </head>
 <body>
 	<article>
@@ -18,16 +30,26 @@
 				<form action="LoginServlet" method="post">		
 					<div id="divFormaUsuarios" style="width: 80%">
 						<label for="username" >Username: <input id="username" name="username" type="text" placeholder="Ingrese su usuario"></label>
-						<label for="password" >Password: <input id="password" name="password" type="password" placeholder="Ingrese su contrase&nacute;a"></label>	
+						<label for="password" >Password: <input id="password" name="password" type="password" placeholder="Ingrese su contrase&nacute;a"></label>
+						
+						<br /><p><label>Por favor escriba las letras de abajo:</label><br/>
+						<input type="text" id="defaultReal" name="defaultReal"></p>
 						<br /><input type="submit" id="enviarLogin" name="enviarLogin" value="Login">
 					</div>
 				</form>
 			</fieldset>
-			<%if(request.getParameter("error")!=null){ %>
-				<div style="background-color: red; color: white">
-					<label>Usuario no existe o datos incorrectos, vuelva a intentarlo.</label>
-				</div>
-			<% }%>
+			<%if(request.getParameter("error")!=null){ 
+			
+				if(request.getParameter("error").equals("invalidCaptcha")){ %>
+					<div style="background-color: red; color: white">
+					<label>Captcha invalido, por favot vulva a interlo.</label>
+					</div>
+				<%}else{ %>
+					<div style="background-color: red; color: white">
+						<label>Usuario no existe o datos incorrectos, vuelva a intentarlo.</label>
+					</div>
+				<% }
+				}%>
 		</section>	
 	</article>
 </body>
